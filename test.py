@@ -4,7 +4,7 @@
 #
 # 环境要求：
 # 1，需要mysql，设置好localhost（user, password, database），启动mysql:
-# https://www.jianshu.com/p/07a9826898c0，本程序默认密码为123123123
+# https://www.jianshu.com/p/07a9826898c0，本程序中使用的默认密码为123123123
 # 2，需要安装以下模块：xlrd, pymysql, treelib
 
 import xlrd
@@ -14,8 +14,6 @@ import treelib
 from treelib import Node, Tree
 
 # 打开excel文件函数，获取专家信息
-
-
 def open_excel():
 	# noinspection PyBroadException
 	try:
@@ -30,8 +28,6 @@ def open_excel():
 		print('Locate worksheet in excel failed')
 
 # 将专家信息存入数据库
-
-
 def insert_data(data_source, table_name):
 	# sheet = open_excel()
 	# cursor = db.cursor()
@@ -50,12 +46,9 @@ def insert_data(data_source, table_name):
 		dele_null_data = "delete from %s where spec_id = '';" % table_name  # 删除空行
 		cursor.execute(dele_null_data)
 		db.commit()
-	# cursor.close()  # 关闭指针
 
 
 # 排除重复数据
-
-
 def eliminate_duplicate_data(one_result, table_eliminate_from):
 	print('开始一次查重程序')
 	print('待查重的记录为：', one_result)
@@ -75,8 +68,6 @@ def eliminate_duplicate_data(one_result, table_eliminate_from):
 
 
 # 随机抽取专家的函数
-
-
 def random_select(table_select_from, category, extract_number):
 	print('随机抽取一组')
 	# cursor = db.cursor()
@@ -92,8 +83,6 @@ def random_select(table_select_from, category, extract_number):
 	results = cursor.fetchall()
 	print('此次目标是抽取%d位专家，此次实际共抽取到%d位专家。分别如下：' % (extract_number, len(results)))
 	print(results)
-	# print('已执行查询语句')
-	# 获取所有记录列表，打印
 	print('一组随机抽取结束！')
 	return results
 
@@ -156,7 +145,6 @@ def result_insert(results_to_insert, table_insert_to, category, table_select_fro
 	except:
 		print("Error: unable to insert data")
 	print('抽取结果完成保存！')
-	# cursor.close()  # 关闭指针
 
 # 构造随机抽取专家的字典
 
@@ -198,8 +186,6 @@ def input_extract_tree(table_select_from, table_insert_to):
 			# 判断专家是否已经被抽取完
 			cate_sql = "select * from %s where category = '%s';" % (table_select_from, cate_name)
 			out_sql = "select * from %s where category = '%s';" % (table_insert_to, cate_name)
-			#print('cate_sql = ', cate_sql)
-			#print('out_sql = ', out_sql)
 			cate_num = cursor.execute(cate_sql)
 			#print('cate_num =', cate_num)
 			out_num = cursor.execute(out_sql)
@@ -314,5 +300,4 @@ if __name__ == '__main__':
     print('\n5、随机抽取已完成并保存，连接关闭，按回车键退出\n')
     cursor.close()
     db.close()
-	#  random_select()
-input()
+
